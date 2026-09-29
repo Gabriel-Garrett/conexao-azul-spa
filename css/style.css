@@ -1,0 +1,261 @@
+:root {
+
+    /* 1. PALETA DE CORES */
+    --cor-primaria: #0056b3; /* Azul escuro - remete à Conexão Azul e passa confiança */
+    --cor-secundaria: #ffb703; /* Amarelo vibrante - remete à criatividade/LEGO */
+    --cor-fundo-claro: #f4f6f9; /* Cinza bem claro para o fundo do site */
+    --cor-fundo-escuro: #2c3e50; /* Azul acinzentado para o rodapé */
+    --cor-texto-escuro: #333333; /* Cinza escuro para textos (melhor leitura que o preto puro) */
+    --cor-texto-claro: #ffffff; /* Branco para textos em fundos escuros */
+    --cor-sucesso: #28a745; /* Verde para validações do formulário */
+    --cor-erro: #dc3545; /* Vermelho para erros no formulário */
+
+    /*2. ESCALA TIPOGRÁFICA */
+
+    --fonte-titulo-1: 2.5rem;   /* Título principal (h1) */
+    --fonte-titulo-2: 2rem;     /* Subtítulos maiores (h2) */
+    --fonte-titulo-3: 1.5rem;   /* Títulos de seções (h3) */
+    --fonte-texto-padrao: 1rem; /* Textos comuns (p, span, label) */
+    --fonte-texto-pequeno: 0.875rem; /* Rodapé e dicas de formulário */
+
+    /* 3. ESPAÇAMENTOS MODULARES */
+    --espaco-p: 8px;   /* Pequeno */
+    --espaco-m: 16px;  /* Médio (padrão) */
+    --espaco-g: 24px;  /* Grande */
+    --espaco-xg: 32px; /* Extra grande */
+    --espaco-xxg: 48px; /* Para separar grandes blocos/sections */
+}
+
+/* ESTRUTURA MACROSCÓPICA - CSS GRID DE 12 COLUNAS */
+.grid-container {
+    display: grid;
+    /* Divide o espaço disponível em 12 frações iguais */
+    grid-template-columns: repeat(12, 1fr);
+    /* Utiliza a variável de espaçamento que criamos no :root */
+    gap: var(--espaco-m);
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto; /* Centraliza a estrutura na tela */
+}
+
+/* PONTOS DE QUEBRA (BREAKPOINTS) PARA RESPONSIVIDADE - MOBILE FIRST */
+
+/* 1. Telas muito pequenas (Celulares em pé - Padrão inicial) */
+.grid-container > * {
+    grid-column: span 12; /* Cada elemento ocupa todas as 12 colunas (100% da largura) */
+}
+
+/* 2. Celulares deitados (a partir de 576px) */
+@media (min-width: 576px) {
+    .grid-container > * {
+        grid-column: span 12;
+    }
+}
+
+/* 3. Tablets (a partir de 768px) */
+@media (min-width: 768px) {
+    /* Exemplo genérico: cartões passam a ocupar metade da tela (6 colunas) */
+    .cartao { grid-column: span 6; }
+}
+
+/* 4. Desktops e Notebooks (a partir de 992px) */
+@media (min-width: 992px) {
+    /* Exemplo genérico: cartões passam a ocupar 4 colunas (3 itens por linha) */
+    .cartao { grid-column: span 4; }
+}
+
+/* 5. Monitores Panorâmicos / Widescreen (a partir de 1200px) */
+@media (min-width: 1200px) {
+    .grid-container {
+        /* Adiciona um respiro lateral extra para o conteúdo não esticar demais */
+        padding: 0 var(--espaco-xxg); 
+    }
+}
+
+/* COMPONENTES VISUAIS - ALINHAMENTOS COM FLEXBOX */
+
+/* Alinha o título da ONG de um lado e o menu do outro */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--espaco-m) 0;
+}
+
+/* Coloca os links do menu um ao lado do outro com espaçamento padronizado */
+nav ul {
+    display: flex;
+    gap: var(--espaco-m); /* Usa a variável de 16px que criamos no :root */
+    list-style: none; /* Remove as bolinhas da lista */
+    padding: 0;
+    margin: 0;
+}
+
+/* Cartões de projetos com Flexbox vertical */
+.cartao-projeto {
+    display: flex;
+    flex-direction: column; /* Organiza a imagem, título e texto de cima para baixo */
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--espaco-p);
+    padding: var(--espaco-m);
+    background-color: var(--cor-fundo-claro);
+    border-radius: 8px;
+}
+
+/* Rodapé com conteúdo centralizado */
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--espaco-g);
+    background-color: var(--cor-fundo-escuro);
+    color: var(--cor-texto-claro);
+}
+
+
+/* Esconde o ícone de hambúrguer no Desktop por padrão */
+.icone-menu {
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--cor-primaria);
+}
+
+/* Lógica do Submenu (Dropdown) no Desktop */
+nav ul li {
+    position: relative; /* Base para o submenu flutuar */
+}
+
+/* Oculta o submenu por padrão */
+nav ul li ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--cor-fundo-claro);
+    padding: var(--espaco-m);
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Pseudo-classe :hover para mostrar o submenu ao passar o mouse */
+nav ul li:hover > ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-p);
+}
+
+@media (max-width: 991px) {
+    /* Mostra o ícone de hambúrguer nos celulares/tablets */
+    .icone-menu {
+        display: block; 
+    }
+
+    /* Esconde o menu horizontal padrão */
+    nav ul {
+        display: none; 
+        flex-direction: column;
+        width: 100%;
+        background-color: var(--cor-fundo-claro);
+        position: absolute;
+        top: 80px; /* Distância do topo */
+        left: 0;
+        padding: var(--espaco-m);
+    }
+
+    /* Aqui entraria a classe .ativo (acionada via JS) para mostrar o menu */
+    nav ul.ativo {
+        display: flex;
+    }
+}
+
+/* =========================================
+   INTERATIVIDADE: BOTÕES E FORMULÁRIOS
+   ========================================= */
+
+/* Estilo base dos botões */
+button, .btn {
+    background-color: var(--cor-primaria);
+    color: var(--cor-texto-claro);
+    padding: var(--espaco-m) var(--espaco-g);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: var(--fonte-texto-padrao);
+    transition: all 0.3s ease; /* Garante a suavidade exigida nas mutações visuais */
+}
+
+/* Hover: Passar o mouse */
+button:hover, .btn:hover {
+    background-color: var(--cor-secundaria);
+    color: var(--cor-texto-escuro);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Focus: Navegação por teclado (Acessibilidade) */
+button:focus, .btn:focus {
+    outline: 3px solid var(--cor-secundaria);
+    outline-offset: 2px;
+}
+
+/* Active: Momento do clique */
+button:active, .btn:active {
+    transform: scale(0.97); /* Efeito de botão pressionado */
+}
+
+/* Disabled: Botão desativado */
+button:disabled, .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #999;
+}
+
+input, textarea {
+    padding: var(--espaco-p);
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+    width: 100%;
+}
+
+/* Sucesso: Campo preenchido corretamente */
+input:valid, textarea:valid {
+    border-color: var(--cor-sucesso); /* Usa o verde do seu :root */
+}
+
+/* Erro: Campo com preenchimento incorreto (quando o usuário interage) */
+input:invalid:not(:placeholder-shown), textarea:invalid:not(:placeholder-shown) {
+    border-color: var(--cor-erro); /* Usa o vermelho do seu :root */
+}
+
+/* =========================================
+   COMPONENTES DE FEEDBACK (BADGES E ALERTAS)
+   ========================================= */
+.feedback-container {
+    padding: var(--espaco-g) 0;
+}
+
+/* Apresentação semântica do Badge (Etiqueta) */
+.badge {
+    background-color: var(--cor-secundaria);
+    color: var(--cor-texto-escuro);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: var(--fonte-texto-pequeno);
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-left: var(--espaco-p);
+}
+
+/* Configuração da Caixa de Alerta */
+.alerta {
+    padding: var(--espaco-m);
+    border-radius: 8px;
+    width: 100%;
+    margin-top: var(--espaco-m);
+    border-left: 6px solid var(--cor-sucesso);
+    background-color: #e8f5e9; /* Fundo verde muito claro para contraste */
+    color: var(--cor-texto-escuro);
+}

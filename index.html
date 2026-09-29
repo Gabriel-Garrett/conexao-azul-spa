@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Página Inicial - ONG Conexão Azul</title>
+</head>
+<body>
+
+    <!-- CABEÇALHO E NAVEGAÇÃO -->
+    <header>
+        <h1>Conexão Azul</h1>
+        
+        <div class="icone-menu">&#9776;</div>
+        
+        <nav>
+            <ul>
+                <li><a href="/" data-link>Início</a></li>
+                <li><a href="/projetos" data-link>Projetos Sociais</a>
+                    <ul>
+                        <li><a href="#">Robótica Inclusiva</a></li>
+                        <li><a href="#">Apoio Familiar</a></li>
+                    </ul>
+                </li>
+                <li><a href="/cadastro" data-link>Cadastro / Engajamento</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL (O JavaScript injeta as páginas aqui dentro) -->
+    <main id="conteudo-principal">
+        <!-- O conteúdo inicial será carregado dinamicamente pelo router.js -->
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer>
+        <p>&copy; 2026 Conexão Azul. Todos os direitos reservados.</p>
+    </footer>
+    
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- SCRIPT PRINCIPAL (Módulo) -->
+    <script type="module" src="./js/main.js"></script>
+</body>
+</html>
