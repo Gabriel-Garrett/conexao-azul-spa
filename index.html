@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,15 +8,22 @@
 </head>
 <body>
 
+    <!-- LINK DE SALTO (Acessibilidade para navegação exclusiva por teclado) -->
+    <a href="#conteudo-principal" class="skip-link">Saltar para o conteúdo principal</a>
+
     <!-- CABEÇALHO E NAVEGAÇÃO -->
     <header>
         <h1>Conexão Azul</h1>
         
-        <div class="icone-menu">&#9776;</div>
+        <!-- Transformado em button para foco nativo do teclado e com atributos ARIA -->
+        <button class="icone-menu" id="menu-toggle" aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menu de navegação">
+            &#9776;
+        </button>
         
-        <nav>
-            <ul>
-                <li><a href="/" data-link>Início</a></li>
+        <nav aria-label="Navegação Principal">
+            <ul id="menu-principal">
+                <!-- aria-current indica a página ativa para o leitor de tela -->
+                <li><a href="/" data-link aria-current="page">Início</a></li>
                 <li><a href="/projetos" data-link>Projetos Sociais</a>
                     <ul>
                         <li><a href="#">Robótica Inclusiva</a></li>
@@ -28,8 +35,8 @@
         </nav>
     </header>
 
-    <!-- CONTEÚDO PRINCIPAL (O JavaScript injeta as páginas aqui dentro) -->
-    <main id="conteudo-principal">
+    <!-- CONTEÚDO PRINCIPAL (aria-live avisa o leitor de tela quando o JS mudar a rota) -->
+    <main id="conteudo-principal" aria-live="polite">
         <!-- O conteúdo inicial será carregado dinamicamente pelo router.js -->
     </main>
 
