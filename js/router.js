@@ -1,10 +1,9 @@
-// Importa a função que liga os eventos do formulário
 import { iniciarValidacaoFormulario } from './validation.js';
 
 const routes = {
-    "/": "/html/home.html",       // <--- Deve apontar para o home.html e nunca para index.html
-    "/cadastro": "/html/cadastro.html",
-    "/projetos": "/html/projetos.html"
+    "/": { template: "/html/home.html", title: "Início - Conexão Azul" },
+    "/cadastro": { template: "/html/cadastro.html", title: "Cadastro - Conexão Azul" },
+    "/projetos": { template: "/html/projetos.html", title: "Projetos Sociais - Conexão Azul" }
 };
 
 const router = async () => {
@@ -12,11 +11,20 @@ const router = async () => {
     const routeMatch = routes[path] || routes["/"];
 
     try {
-        const response = await fetch(routeMatch);
+        const response = await fetch(routeMatch.template);
         const html = await response.text();
         document.getElementById("conteudo-principal").innerHTML = html;
+        document.title = routeMatch.title;
 
-        // Se a página carregada for a de cadastro, reativa os eventos do formulário!
+        // ATUALIZAÇÃO VISUAL: Move o sublinhado amarelo para a página ativa
+        document.querySelectorAll('nav a[data-link]').forEach(link => {
+            if (link.getAttribute('href') === path) {
+                link.setAttribute('aria-current', 'page');
+            } else {
+                link.removeAttribute('aria-current');
+            }
+        });
+
         if (path === "/cadastro") {
             iniciarValidacaoFormulario();
         }
@@ -30,12 +38,12 @@ const navigateTo = url => {
     router();
 };
 
-// Exporta a função que inicializa o roteamento
 export const iniciarRoteador = () => {
     document.body.addEventListener("click", e => {
-        if (e.target.matches("[data-link]")) {
+        const link = e.target.closest("[data-link]");
+        if (link) {
             e.preventDefault();
-            navigateTo(e.target.href);
+            navigateTo(link.href);
         }
     });
 
